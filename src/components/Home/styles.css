@@ -1,0 +1,37 @@
+.menu {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.menu button {
+  background-color: #405D72;
+  color: #e9e0e0;
+  border: none;
+  padding: 12px 25px;
+  margin: 10px 0;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+body.dark-mode .menu button {
+  background-color: #5C5470;
+}
+
+.menu button:hover {
+  background-color: #758694;
+  transform: translateY(-2px);
+}
+
+h1 {
+  color: #405D72;
+  font-weight: 600;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
