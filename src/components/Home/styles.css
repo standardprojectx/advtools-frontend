@@ -35,3 +35,9 @@ h1 {
   text-align: center;
 }
 
+body.dark-mode h1 {
+  color: #5C5470;
+}
+
+
+
