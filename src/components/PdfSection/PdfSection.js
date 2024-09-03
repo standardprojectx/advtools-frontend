@@ -16,12 +16,27 @@ const PdfSection = () => {
     Array.from(files).forEach(file => formData.append('files', file));
 
     try {
-      const response = await fetch('http://localhost:3001/convert', {
+      const response = await fetch('https://advtools-backend.vercel.app/convert', {
         method: 'POST',
         body: formData,
       });
-      const result = await response.json();
-      alert(`Ação realizada: ${result.message}`);
+
+      if (response.ok) {
+        const blob = await response.blob();
+        const contentDisposition = response.headers.get('Content-Disposition');
+        const fileName = contentDisposition.split('filename=')[1].replace(/"/g, '');
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = downloadUrl;
+        a.download = fileName; // Nome dinâmico do arquivo
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(downloadUrl);
+      } else {
+        const result = await response.json();
+        alert(`Erro na conversão: ${result.message}`);
+      }
     } catch (error) {
       console.error('Erro ao realizar a ação:', error);
     }

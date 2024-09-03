@@ -16,12 +16,27 @@ const AudioSection = () => {
     Array.from(files).forEach(file => formData.append('files', file));
 
     try {
-      const response = await fetch('http://localhost:3001/convert', {
+      const response = await fetch('https://advtools-backend.vercel.app/convert', {
         method: 'POST',
         body: formData,
       });
-      const result = await response.json();
-      alert(`Conversão realizada: ${result.message}`);
+
+      if (response.ok) {
+        const blob = await response.blob();
+        const contentDisposition = response.headers.get('Content-Disposition');
+        const fileName = contentDisposition.split('filename=')[1].replace(/"/g, '');
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = downloadUrl;
+        a.download = fileName; // Nome dinâmico do arquivo
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(downloadUrl);
+      } else {
+        const result = await response.json();
+        alert(`Erro na conversão: ${result.message}`);
+      }
     } catch (error) {
       console.error('Erro ao converter arquivos:', error);
     }
@@ -37,7 +52,7 @@ const AudioSection = () => {
       <h2>Áudio</h2>
       <input type="file" id="audioInput" multiple accept="audio/*" />
       <select id="audioConversionSelect">
-        <option value="" disabled selected>Selecione uma conversão</option>
+        <option value="" disabled>Selecione uma conversão</option>
         <option value="opusToOgg">Converter OPUS para OGG</option>
         <option value="webmToOgg">Converter WEBM para OGG</option>
       </select>

@@ -14,12 +14,25 @@ const ImageSection = () => {
     Array.from(files).forEach(file => formData.append('files', file));
 
     try {
-      const response = await fetch('http://localhost:3001/convert', {
+      const response = await fetch('https://advtools-backend.vercel.app/convert', {
         method: 'POST',
         body: formData,
       });
-      const result = await response.json();
-      alert(`Conversão realizada: ${result.message}`);
+
+      if (response.ok) {
+        const blob = await response.blob();
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = downloadUrl;
+        a.download = 'converted_file.pdf'; // Você pode ajustar para pegar o nome dinamicamente, se necessário
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(downloadUrl);
+      } else {
+        const result = await response.json();
+        alert(`Erro na conversão: ${result.message}`);
+      }
     } catch (error) {
       console.error('Erro ao converter arquivos:', error);
     }
