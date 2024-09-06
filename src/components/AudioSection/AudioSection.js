@@ -24,21 +24,44 @@ const AudioSection = () => {
       if (response.ok) {
         const blob = await response.blob();
         const contentDisposition = response.headers.get('Content-Disposition');
-        const fileName = contentDisposition.split('filename=')[1].replace(/"/g, '');
+        
+        let fileName = 'downloaded-file'; // Nome padrão caso o cabeçalho esteja ausente
+        
+        if (contentDisposition) {
+          const originalFileName = contentDisposition.split('filename=')[1].replace(/"/g, '');
+          const fileExtension = getConvertedFileExtension(conversionType);
+          const baseName = originalFileName.substring(0, originalFileName.lastIndexOf('.'));
+          fileName = `${baseName}-converted.${fileExtension}`;
+        }
+      
         const downloadUrl = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = downloadUrl;
-        a.download = fileName; // Nome dinâmico do arquivo
+        a.download = fileName; // Nome com "-converted" e extensão correta
         document.body.appendChild(a);
         a.click();
         a.remove();
         window.URL.revokeObjectURL(downloadUrl);
+          
       } else {
         const result = await response.json();
         alert(`Erro na conversão: ${result.message}`);
       }
     } catch (error) {
       console.error('Erro ao converter arquivos:', error);
+    }
+  };
+
+  const getConvertedFileExtension = (conversionType) => {
+    switch (conversionType) {
+      case 'opusToOgg':
+        return 'ogg';
+      case 'webmToOgg':
+        return 'ogg';
+      case 'mp4ToWebm':
+        return 'webm';
+      default:
+        return '';
     }
   };
 
@@ -55,6 +78,7 @@ const AudioSection = () => {
         <option value="" disabled>Selecione uma conversão</option>
         <option value="opusToOgg">Converter OPUS para OGG</option>
         <option value="webmToOgg">Converter WEBM para OGG</option>
+        <option value="mp4ToWebm">Converter MP4 para WEBM</option>
       </select>
       <button className="convert" onClick={convertFiles}>Converter Áudio</button>
       <button className="convert" onClick={clearResults}>Limpar</button>
