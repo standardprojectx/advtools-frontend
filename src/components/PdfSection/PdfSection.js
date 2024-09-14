@@ -16,7 +16,7 @@ const PdfSection = () => {
     Array.from(files).forEach(file => formData.append('files', file));
 
     try {
-      const response = await fetch('https://advtools-backend.vercel.app/convert', {
+      const response = await fetch('https://advtools-backend.onrender.com/convert', {
         method: 'POST',
         body: formData,
       });

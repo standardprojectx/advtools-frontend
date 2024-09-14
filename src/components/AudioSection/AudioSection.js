@@ -16,16 +16,16 @@ const AudioSection = () => {
     Array.from(files).forEach(file => formData.append('files', file));
 
     try {
-      const response = await fetch('https://advtools-backend.vercel.app/convert', {
+      const response = await fetch('https://advtools-backend.onrender.com/convert', {
         method: 'POST',
         body: formData,
       });
-
+    
       if (response.ok) {
         const blob = await response.blob();
         const contentDisposition = response.headers.get('Content-Disposition');
         
-        let fileName = 'downloaded-file'; // Nome padrão caso o cabeçalho esteja ausente
+        let fileName = 'downloaded-file'; 
         
         if (contentDisposition) {
           const originalFileName = contentDisposition.split('filename=')[1].replace(/"/g, '');
@@ -37,7 +37,7 @@ const AudioSection = () => {
         const downloadUrl = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = downloadUrl;
-        a.download = fileName; // Nome com "-converted" e extensão correta
+        a.download = fileName; 
         document.body.appendChild(a);
         a.click();
         a.remove();
