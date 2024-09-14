@@ -14,7 +14,7 @@ const ImageSection = () => {
     Array.from(files).forEach(file => formData.append('files', file));
 
     try {
-      const response = await fetch('https://advtools-backend.onrender.com/convert', {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/convert`, { 
         method: 'POST',
         body: formData,
       });
@@ -24,7 +24,7 @@ const ImageSection = () => {
         const downloadUrl = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = downloadUrl;
-        a.download = 'converted_file.pdf'; // Você pode ajustar para pegar o nome dinamicamente, se necessário
+        a.download = 'converted_file.pdf'; 
         document.body.appendChild(a);
         a.click();
         a.remove();
