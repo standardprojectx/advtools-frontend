@@ -20,7 +20,6 @@ const AudioSection = () => {
         method: 'POST',
         body: formData,
       });
-    
       if (response.ok) {
         const blob = await response.blob();
         const contentDisposition = response.headers.get('Content-Disposition');
