@@ -16,7 +16,7 @@ const VideoSection = () => {
     Array.from(files).forEach(file => formData.append('files', file));
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/convert`, { 
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/convert/video`, { 
         method: 'POST',
         body: formData,
       });

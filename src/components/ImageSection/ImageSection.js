@@ -14,7 +14,7 @@ const ImageSection = () => {
     Array.from(files).forEach(file => formData.append('files', file));
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/convert`, { 
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/convert/image`, { 
         method: 'POST',
         body: formData,
       });
