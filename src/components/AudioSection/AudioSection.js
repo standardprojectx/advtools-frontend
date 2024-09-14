@@ -16,7 +16,7 @@ const AudioSection = () => {
     Array.from(files).forEach(file => formData.append('files', file));
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/convert/audio`, { // Atualização aqui
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/convert/audio`, {
         method: 'POST',
         body: formData,
       });
@@ -28,10 +28,10 @@ const AudioSection = () => {
         let fileName = 'downloaded-file'; 
         
         if (contentDisposition) {
-          const originalFileName = contentDisposition.split('filename=')[1].replace(/"/g, '');
-          const fileExtension = getConvertedFileExtension(conversionType);
-          const baseName = originalFileName.substring(0, originalFileName.lastIndexOf('.'));
-          fileName = `${baseName}-converted.${fileExtension}`;
+          const matches = /filename="?([^"]+)"?/.exec(contentDisposition);
+          if (matches != null && matches[1]) {
+            fileName = matches[1];
+          }
         }
       
         const downloadUrl = window.URL.createObjectURL(blob);
@@ -46,7 +46,7 @@ const AudioSection = () => {
       } else {
         const result = await response.json();
         alert(`Erro na conversão: ${result.message}`);
-      }
+      }      
     } catch (error) {
       console.error('Erro ao converter arquivos:', error);
     }
