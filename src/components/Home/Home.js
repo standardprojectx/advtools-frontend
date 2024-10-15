@@ -34,14 +34,15 @@ function Home() {
       <div className="menu">
         <button onClick={() => showSection('imageSection')}>Imagens</button>
         <button onClick={() => showSection('audioSection')}>Áudio</button>
-        <button onClick={() => showSection('videoSection')}>Vídeo</button>
+        {/* <button onClick={() => showSection('videoSection')}>Vídeo</button> */}
         <button onClick={() => showSection('pdfSection')}>PDFs</button>
         <button onClick={() => showSection('percentageSection')}>Porcentagem</button>
       </div>
       <div className="sections-container">
         {activeSection === 'imageSection' && <ImageSection />}
         {activeSection === 'audioSection' && <AudioSection />}
-        {activeSection === 'videoSection' && <VideoSection />}
+        {/* {activeSection === 'videoSection' && <VideoSection />} */}
+
         {activeSection === 'pdfSection' && <PdfSection />}
         {activeSection === 'percentageSection' && <PercentageSection />}
       </div>
