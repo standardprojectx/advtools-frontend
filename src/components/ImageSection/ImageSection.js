@@ -52,13 +52,16 @@ const ImageSection = () => {
 
   return (
     <div className="section">
+
+      <div className='title-header'>
       <h2>Imagens</h2>
+      </div>
       <input type="file" id="imageInput" multiple accept="image/*" />
       <div className="buttons">
-        <button className="convert" onClick={convertFiles} disabled={isLoading}>
+        <button className="convert-image" onClick={convertFiles} disabled={isLoading}>
           {isLoading ? 'Convertendo...' : 'Converter Imagens para PDF'}
         </button>
-        <button className="convert" onClick={clearResults} disabled={isLoading}>
+        <button className="convert-image" onClick={clearResults} disabled={isLoading}>
           Limpar
         </button>
       </div>

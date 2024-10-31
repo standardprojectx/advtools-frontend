@@ -49,15 +49,17 @@ const PdfSection = () => {
 
   return (
     <div className="section">
-      <h2>PDFs</h2>
+      <div className='title-header'>
+        <h2>PDF's</h2>
+      </div>
       <input type="file" id="pdfInput" accept="application/pdf" />
       <select id="pdfActionSelect">
         <option value="" disabled>Selecione uma ação</option>
         <option value="mergePdfs">Juntar PDFs</option>
         <option value="splitPdf">Separar PDF</option>
       </select>
-      <button className="convert" onClick={convertPdf}>Converter</button>
-      <button className="convert" onClick={clearResults}>Limpar</button>
+      <button className="convert-pdf" onClick={convertPdf}>Converter</button>
+      <button className="convert-pdf" onClick={clearResults}>Limpar</button>
     </div>
   );
 };

@@ -2,19 +2,33 @@ body {
   font-family: 'Montserrat', sans-serif;
   background-color: #FFF8F3;
   color: #333;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  min-height: 100vh;
-  margin: 0;
-  padding: 0 20px;
-  transition: background-color 0.5s ease, color 0.5s ease;
+
 }
 
 body.dark-mode {
   background-color: #352F44;
   color: #FAF0E6;
-  transition: background-color 0.5s ease, color 0.5s ease;
+
+}
+
+.section {
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 50px;
+  background-color: #F7E7DC;
+  border-radius: 8px;
+  margin: 0 auto; 
+  margin-top: 50px;
+  margin-bottom: 20px;
+  width: 700px;
+  height: 250px;
+  justify-content: center;
+  align-items: center; 
+  text-align: center;
+}
+
+.sections-container { 
+  justify-content: center;
+  align-items: center; 
 }
 

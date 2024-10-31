@@ -3,15 +3,19 @@
     background-color: #5C5470;
   }
   
-  button.convert {
-    background-color: #405D72; 
+  button.convert-image {
+    background-color: #4f4763; 
     color: white;
     border: none;
-    padding: 12px 25px;
+    padding-top: 20px;
     border-radius: 8px;
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 20px;
+    margin-right: 20px;
+    gap: 20px;
+    padding: 20px;
   }
   
   body.dark-mode button.convert {
@@ -20,5 +24,11 @@
   
   button.convert:hover {
     background-color: #758694;
+  }
+
+  .title-header {
+    align-items: center; 
+    margin-bottom: 50px;
+    padding-top: 10px;
   }
   

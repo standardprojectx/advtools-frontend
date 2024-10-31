@@ -1,13 +1,3 @@
-.section {
-    width: 100%;
-    max-width: 600px;
-    padding: 50px;
-    background-color: #F7E7DC;
-    border-radius: 8px;
-    margin-top: 50px;
-    margin-bottom: 20px;
-  }
-  
   body.dark-mode .section {
     background-color: #5C5470;
   }

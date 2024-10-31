@@ -22,7 +22,9 @@ const PercentageSection = () => {
 
   return (
     <div className="section">
+      <div className='title-header'>
       <h2>Cálculo de Porcentagem</h2>
+      </div>
       <input
         type="number"
         value={percentage}

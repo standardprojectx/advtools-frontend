@@ -56,8 +56,10 @@ const AudioSection = () => {
   };
 
   return (
-    <div className="section">
-      <h2>Áudio</h2>
+    <div className="section"> 
+      <div className='title-header'>
+        <h2>Áudio</h2>
+      </div>
       <input type="file" id="audioInput" multiple accept="audio/*" />
       <select id="audioConversionSelect" defaultValue="">
         <option value="" disabled>
