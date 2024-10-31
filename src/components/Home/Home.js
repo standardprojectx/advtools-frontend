@@ -4,11 +4,12 @@ import AudioSection from '../AudioSection/AudioSection';
 import PdfSection from '../PdfSection/PdfSection';
 import CalculatorSection from '../CalculatorSection/CalculatorSection';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
-import './styles.css'; 
+import './styles.css';
 
 function Home() {
   const [activeSection, setActiveSection] = useState('imageSection');
-  const [darkMode, setDarkMode] = useState(true); 
+  const [fade, setFade] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
 
   useEffect(() => {
     if (darkMode) {
@@ -19,15 +20,19 @@ function Home() {
   }, [darkMode]);
 
   const showSection = (sectionId) => {
-    setActiveSection(sectionId);
+    setFade(true); 
+    setTimeout(() => {
+      setActiveSection(sectionId); 
+      setFade(false); 
+    }, 200); 
   };
 
   const toggleTheme = () => {
-    setDarkMode(prevMode => !prevMode);
+    setDarkMode((prevMode) => !prevMode);
   };
 
   return (
-    <div style={{width: "100%", height: "100%", borderWidth: 1, borderColor: 'green'}}>
+    <div style={{ width: '100%', height: '100%', borderWidth: 1, borderColor: 'green' }}>
       <div className="header">
         <div className="header-left">
           <div className="logo">
@@ -37,13 +42,12 @@ function Home() {
           <button onClick={() => showSection('audioSection')}>Áudio</button>
           <button onClick={() => showSection('pdfSection')}>PDFs</button>
           <button onClick={() => showSection('calculatorSection')}>Calculadoras</button>
+        </div>
+
+        <ThemeToggle toggleTheme={toggleTheme} darkMode={darkMode} />
       </div>
 
-        {/* <button onClick={() => redirecionar to login page>Login</button> */}
-        <ThemeToggle toggleTheme={toggleTheme} darkMode={darkMode} />
-    </div>
-      
-      <div className="sections-container">
+      <div className={`sections-container ${fade ? 'fade-out' : 'fade-in'}`}>
         {activeSection === 'imageSection' && <ImageSection />}
         {activeSection === 'audioSection' && <AudioSection />}
         {activeSection === 'pdfSection' && <PdfSection />}

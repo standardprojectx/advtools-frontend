@@ -58,4 +58,13 @@ body.dark-mode h1 {
 }
 
 
+.fade-in {
+  opacity: 1;
+  transition: opacity 0.2s ease-in;
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+}
 
