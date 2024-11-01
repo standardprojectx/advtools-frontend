@@ -1,29 +1,105 @@
 
-  body.dark-mode .section {
-    background-color: #5C5470;
-  }
-  
-  button.convert-pdf {
-    background-color: #4f4763; 
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 8px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  body.dark-mode button.convert {
-    background-color: #4f4763; 
-  }
-  
-  button.convert:hover {
-    background-color: #758694;
-  }
-  
-  .title-header {
-    align-items: center; 
-    margin-bottom: 50px;
-    padding-top: 10px;
-  }
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #352F44;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  width: 250px;
+  text-align: center;
+}
+
+.custom-file-upload:hover {
+  background-color: #5C5470;
+}
+
+.section-pdf {
+  padding: 25px;
+  background-color: #4f4763;
+  border-radius: 8px;
+  margin: 0 auto; 
+  margin-top: 50px;
+  width: 600px;
+  text-align: center;
+  color: white;
+}
+
+.section-pdf-selection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 3px solid #352F44;
+  padding: 30px;
+  border-radius: 15px;
+  color: white;
+  margin-bottom: 20px;
+}
+
+
+.custom-select {
+  margin-top: 15px;
+  padding: 10px;
+  font-size: 1rem;
+  background-color: #352F44;
+  color: white;
+  border: 2px solid #5C5470;
+  border-radius: 8px;
+  width: 250px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.custom-select:hover {
+  background-color: #5C5470;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+button.convert-pdf-btn,
+button.clear-pdf-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #4f4763;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 120px;
+}
+
+button.clear-pdf-btn {
+  background-color: #451c3c;
+}
+
+button.convert-pdf-btn:hover {
+  background-color: #3CB371;
+}
+
+button.clear-pdf-btn:hover {
+  background-color: #FF4500;
+}
+
+.title-header {
+  align-items: center;
+  margin-bottom: 50px;
+  padding-top: 10px;
+  color: white;
+}

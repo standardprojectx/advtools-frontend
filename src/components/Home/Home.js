@@ -56,12 +56,12 @@ function Home() {
           >
             PDFs
           </button>
-          <button
+          {/* <button
             onClick={() => showSection('calculatorSection')}
             className={activeSection === 'calculatorSection' ? 'active' : ''}
           >
             Calculadoras
-          </button>
+          </button> */}
         </div>
 
         <ThemeToggle toggleTheme={toggleTheme} darkMode={darkMode} />

@@ -1,7 +1,20 @@
-import React from 'react';
-import './styles.css'; 
+import React, { useState } from 'react';
+import './styles.css';
+import { FaUpload } from 'react-icons/fa'; // Ícone de upload
 
 const PdfSection = () => {
+  const [selectedFiles, setSelectedFiles] = useState(null);
+
+  const handleFileChange = (event) => {
+    const files = event.target.files;
+    if (files.length > 0) {
+      const fileNames = Array.from(files).map(file => file.name).join(', ');
+      setSelectedFiles(fileNames);
+    } else {
+      setSelectedFiles(null);
+    }
+  };
+
   const convertPdf = async () => {
     const files = document.getElementById('pdfInput').files;
     const action = document.getElementById('pdfActionSelect').value;
@@ -45,21 +58,30 @@ const PdfSection = () => {
   const clearResults = () => {
     document.getElementById('pdfInput').value = '';
     document.getElementById('pdfActionSelect').value = '';
+    setSelectedFiles(null);
   };
 
   return (
-    <div className="section">
-      <div className='title-header'>
+    <div className="section-pdf">
+      <div className="title-header">
         <h2>PDF's</h2>
       </div>
-      <input type="file" id="pdfInput" accept="application/pdf" />
-      <select id="pdfActionSelect">
-        <option value="" disabled>Selecione uma ação</option>
-        <option value="mergePdfs">Juntar PDFs</option>
-        <option value="splitPdf">Separar PDF</option>
-      </select>
-      <button className="convert-pdf" onClick={convertPdf}>Converter</button>
-      <button className="convert-pdf" onClick={clearResults}>Limpar</button>
+      <div className="section-pdf-selection">
+        <label className="custom-file-upload">
+          <input type="file" id="pdfInput" accept="application/pdf" onChange={handleFileChange} />
+          <FaUpload size={24} />
+          <span>{selectedFiles || 'Selecione os Arquivos'}</span>
+        </label>
+        <select id="pdfActionSelect" className="custom-select" defaultValue="">
+          <option value="" disabled>Selecione uma ação</option>
+          <option value="mergePdfs">Juntar PDFs</option>
+          <option value="splitPdf">Separar PDF</option>
+        </select>
+      </div>
+      <div className="buttons">
+        <button className="convert-pdf-btn" onClick={convertPdf}>Converter</button>
+        <button className="clear-pdf-btn" onClick={clearResults}>Limpar</button>
+      </div>
     </div>
   );
 };

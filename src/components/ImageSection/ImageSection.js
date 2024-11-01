@@ -93,7 +93,7 @@ const ImageSection = () => {
       )}
 
       {downloadUrl && (
-        <div className="download-link">
+        <div style={{marginTop: 20}}>
           <a href={downloadUrl} target="_blank" rel="noopener noreferrer">
             Baixar PDF Convertido
           </a>
