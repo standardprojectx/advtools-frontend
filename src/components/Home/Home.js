@@ -38,10 +38,30 @@ function Home() {
           <div className="logo">
             <h1>AdvTools</h1>
           </div>
-          <button onClick={() => showSection('imageSection')}>Imagens</button>
-          <button onClick={() => showSection('audioSection')}>Áudio</button>
-          <button onClick={() => showSection('pdfSection')}>PDFs</button>
-          <button onClick={() => showSection('calculatorSection')}>Calculadoras</button>
+          <button
+            onClick={() => showSection('imageSection')}
+            className={activeSection === 'imageSection' ? 'active' : ''}
+          >
+            Imagens
+          </button>
+          <button
+            onClick={() => showSection('audioSection')}
+            className={activeSection === 'audioSection' ? 'active' : ''}
+          >
+            Áudio
+          </button>
+          <button
+            onClick={() => showSection('pdfSection')}
+            className={activeSection === 'pdfSection' ? 'active' : ''}
+          >
+            PDFs
+          </button>
+          <button
+            onClick={() => showSection('calculatorSection')}
+            className={activeSection === 'calculatorSection' ? 'active' : ''}
+          >
+            Calculadoras
+          </button>
         </div>
 
         <ThemeToggle toggleTheme={toggleTheme} darkMode={darkMode} />

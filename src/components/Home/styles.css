@@ -27,18 +27,18 @@
 .header button:hover {
   background-color: #758694;
   transform: translateY(-2px);
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 
 body.dark-mode .header button {
   background-color: #5C5470;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 body.dark-mode .header button:hover {
   background-color: #352F44;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 
@@ -48,15 +48,11 @@ h1 {
   font-size: 2.0rem;
   padding-left: 20px;
   padding-right: 20px;
-  border-width: 10px;
-  border-color: red;
-
 }
 
 body.dark-mode h1 {
   color: #352F44;
 }
-
 
 .fade-in {
   opacity: 1;
@@ -68,3 +64,12 @@ body.dark-mode h1 {
   transition: opacity 0.2s ease-out;
 }
 
+.header button.active {
+  background-color: #758694; 
+  color: white; 
+}
+
+body.dark-mode .header button.active {
+  background-color: #352F44; 
+  color: white;
+}

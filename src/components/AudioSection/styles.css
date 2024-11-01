@@ -22,9 +22,66 @@
     background-color: #758694;
   }
 
-  .title-header {
-    align-items: center; 
-    margin-bottom: 50px;
-    padding-top: 10px;
+
+
+  .section-audio {
+    padding: 25px;
+    background-color: #4f4763;
+    border-radius: 8px;
+    margin: 0 auto; 
+    margin-top: 50px;
+    width: 600px;
+    text-align: center;
+    color: white;
   }
   
+  .title-header-audio h2 {
+    margin-bottom: 20px;
+  }
+  
+  .section-audio-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 3px solid #352F44;
+    padding: 30px;
+    border-radius: 15px;
+    color: white;
+    margin-bottom: 20px;
+  }
+  
+
+  
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+button.convert-audio-btn,
+button.clean-audio-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #352F44; 
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 120px;
+}
+
+button.clean-audio-btn {
+  background-color: #451c3c; 
+}
+
+button.convert-audio-btn:hover {
+  background-color: #3CB371;
+}
+
+button.clean-audio-btn:hover {
+  background-color: #FF4500;
+}

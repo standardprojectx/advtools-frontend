@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './styles.css';
+import { FaUpload, FaFilePdf,FaRegFilePdf } from 'react-icons/fa'; 
 
 const ImageSection = () => {
   const [downloadUrl, setDownloadUrl] = useState(null);
@@ -67,7 +68,13 @@ const ImageSection = () => {
       <div className='section-image-selection'>
         <label className="custom-file-upload">
           <input type="file" id="imageInput" multiple accept="image/*" onChange={handleFileChange} />
-          {selectedFiles ? `Selecionado(s): ${selectedFiles}` : 'Escolher Arquivos'}
+          <FaUpload size={32} />
+          <div style={{marginTop: 10}}>
+          {selectedFiles ? null : 'Escolher Arquivos'}
+          </div>
+        </label>
+        <label style={{marginTop: 20}}>
+          {selectedFiles ? `Selecionado(s): ${selectedFiles}` : null}
         </label>
       </div>
       <div className="buttons">
