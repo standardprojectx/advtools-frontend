@@ -1,11 +1,21 @@
 import React, { useState } from 'react';
-import './styles.css'; 
+import './styles.css';
 
 const ImageSection = () => {
-
   const [downloadUrl, setDownloadUrl] = useState(null);
   const [isLoading, setIsLoading] = useState(false); 
   const [errorMessage, setErrorMessage] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState(null); 
+
+  const handleFileChange = (event) => {
+    const files = event.target.files;
+    if (files.length > 0) {
+      const fileNames = Array.from(files).map(file => file.name).join(', ');
+      setSelectedFiles(fileNames); 
+    } else {
+      setSelectedFiles(null); 
+    }
+  };
 
   const convertFiles = async () => {
     const files = document.getElementById('imageInput').files;
@@ -15,7 +25,6 @@ const ImageSection = () => {
     }
 
     const formData = new FormData();
-
     Array.from(files).forEach(file => formData.append('files', file));
 
     try {
@@ -29,7 +38,6 @@ const ImageSection = () => {
 
       if (response.ok) {
         const result = await response.json();
-       
         const fullDownloadUrl = `${process.env.REACT_APP_BACKEND_URL}${result.downloadUrl}`;
         setDownloadUrl(fullDownloadUrl);
       } else {
@@ -46,26 +54,30 @@ const ImageSection = () => {
 
   const clearResults = () => {
     document.getElementById('imageInput').value = '';
+    setSelectedFiles(null);
     setDownloadUrl(null);
     setErrorMessage(null);
   };
 
   return (
-    <div className="section">
-
-      <div className='title-header'>
-      <h2>Imagens</h2>
+    <div className="section-image">
+      <div className='title-header-image'>
+        <h2>Imagens</h2>
       </div>
-      <input type="file" id="imageInput" multiple accept="image/*" />
+      <div className='section-image-selection'>
+        <label className="custom-file-upload">
+          <input type="file" id="imageInput" multiple accept="image/*" onChange={handleFileChange} />
+          {selectedFiles ? `Selecionado(s): ${selectedFiles}` : 'Escolher Arquivos'}
+        </label>
+      </div>
       <div className="buttons">
-        <button className="convert-image" onClick={convertFiles} disabled={isLoading}>
-          {isLoading ? 'Convertendo...' : 'Converter Imagens para PDF'}
+        <button className="convert-image-btn" onClick={convertFiles} disabled={isLoading}>
+          {isLoading ? 'Convertendo...' : 'Converter'}
         </button>
-        <button className="convert-image" onClick={clearResults} disabled={isLoading}>
+        <button className="clean-image-btn" onClick={clearResults} disabled={isLoading}>
           Limpar
         </button>
       </div>
-      
 
       {errorMessage && (
         <div className="error-message">

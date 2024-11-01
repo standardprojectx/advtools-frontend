@@ -8,27 +8,6 @@ body {
 body.dark-mode {
   background-color: #352F44;
   color: #FAF0E6;
-
 }
 
-.section {
-  padding-left: 50px;
-  padding-right: 50px;
-  padding-bottom: 50px;
-  background-color: #F7E7DC;
-  border-radius: 8px;
-  margin: 0 auto; 
-  margin-top: 50px;
-  margin-bottom: 20px;
-  width: 700px;
-  height: 250px;
-  justify-content: center;
-  align-items: center; 
-  text-align: center;
-}
-
-.sections-container { 
-  justify-content: center;
-  align-items: center; 
-}
 
