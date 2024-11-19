@@ -1,4 +1,3 @@
-
 input[type="file"] {
   display: none;
 }
@@ -31,8 +30,8 @@ input[type="file"] {
 
 .custom-file-upload {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: center; 
+  justify-content: center; 
   padding: 10px 20px;
   background-color: #352F44;
   color: white;
@@ -40,17 +39,83 @@ input[type="file"] {
   cursor: pointer;
   font-size: 1rem;
   transition: background-color 0.3s ease;
+  width: 100%;
 }
 
 .custom-file-upload:hover {
   background-color: #5C5470;
 }
 
+.upload-container {
+  display: flex;
+  align-items: center; 
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.icon-container {
+  border: 2px solid #fff;
+  padding: 8px;
+  border-radius: 4px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #352F44; 
+}
+
+.upload-text {
+  text-align: left;
+  flex: 1; 
+  font-weight: bold; 
+}
+
+
+.selected-files {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+  justify-content: center;
+}
+
+.file-chip {
+  display: flex;
+  align-items: center;
+  background-color: #5C5470;
+  color: white;
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-size: 0.9rem;
+}
+
+.file-name {
+  margin-right: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: #ff4d4d;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0;
+  line-height: 1;
+}
+
+.remove-btn:hover {
+  color: #ff1a1a;
+}
 
 .buttons {
   display: flex;
   justify-content: center;
   gap: 15px;
+  margin-top: 20px;
 }
 
 button.convert-image-btn,
@@ -74,9 +139,34 @@ button.clean-image-btn {
 }
 
 button.convert-image-btn:hover {
-  background-color: #3CB371;
+  background-color: #3e394d;
 }
 
 button.clean-image-btn:hover {
-  background-color: #FF4500;
+  background-color: #67305b;
+}
+
+.error-message {
+  margin-top: 20px;
+  color: #ff4d4d;
+}
+
+.download-section {
+  margin-top: 20px;
+}
+
+
+@media (max-width: 500px) {
+  .file-name {
+    max-width: 150px;
+  }
+
+  .file-chip {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .remove-btn {
+    align-self: flex-end;
+  }
 }

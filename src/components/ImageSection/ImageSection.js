@@ -1,32 +1,38 @@
 import React, { useState } from 'react';
 import './styles.css';
-import { FaUpload, FaFilePdf,FaRegFilePdf } from 'react-icons/fa'; 
+import { FaUpload, FaPlus } from 'react-icons/fa'; 
 
 const ImageSection = () => {
   const [downloadUrl, setDownloadUrl] = useState(null);
   const [isLoading, setIsLoading] = useState(false); 
   const [errorMessage, setErrorMessage] = useState(null);
-  const [selectedFiles, setSelectedFiles] = useState(null); 
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   const handleFileChange = (event) => {
-    const files = event.target.files;
+    const files = Array.from(event.target.files);
     if (files.length > 0) {
-      const fileNames = Array.from(files).map(file => file.name).join(', ');
-      setSelectedFiles(fileNames); 
-    } else {
-      setSelectedFiles(null); 
+     
+      const newFiles = files.filter(file => 
+        !selectedFiles.some(existingFile => existingFile.name === file.name && existingFile.size === file.size)
+      );
+      setSelectedFiles(prevFiles => [...prevFiles, ...newFiles]);
     }
   };
 
+  const removeFile = (index) => {
+    const newFiles = [...selectedFiles];
+    newFiles.splice(index, 1);
+    setSelectedFiles(newFiles);
+  };
+
   const convertFiles = async () => {
-    const files = document.getElementById('imageInput').files;
-    if (files.length === 0) {
+    if (selectedFiles.length === 0) {
       alert('Por favor, selecione pelo menos uma imagem.');
       return;
     }
 
     const formData = new FormData();
-    Array.from(files).forEach(file => formData.append('files', file));
+    selectedFiles.forEach(file => formData.append('files', file));
 
     try {
       setIsLoading(true); 
@@ -55,7 +61,7 @@ const ImageSection = () => {
 
   const clearResults = () => {
     document.getElementById('imageInput').value = '';
-    setSelectedFiles(null);
+    setSelectedFiles([]);
     setDownloadUrl(null);
     setErrorMessage(null);
   };
@@ -65,18 +71,34 @@ const ImageSection = () => {
       <div className='title-header-image'>
         <h2>Imagens</h2>
       </div>
+      <hr style={{backgroundColor: 'red', borderColor: '#5C5470', borderWidth: 1}} />
       <div className='section-image-selection'>
         <label className="custom-file-upload">
           <input type="file" id="imageInput" multiple accept="image/*" onChange={handleFileChange} />
-          <FaUpload size={32} />
-          <div style={{marginTop: 10}}>
-          {selectedFiles ? null : 'Escolher Arquivos'}
+
+          <div className="upload-container">
+            <div className="icon-container">
+              {selectedFiles.length > 0 ? <FaPlus size={24} /> : <FaUpload size={24} />}
+            </div>
+            <span className="upload-text">
+              {selectedFiles.length > 0 ? 'Adicionar mais arquivos' : 'Escolher Arquivos'}
+            </span>
           </div>
         </label>
-        <label style={{marginTop: 20}}>
-          {selectedFiles ? `Selecionado(s): ${selectedFiles}` : null}
-        </label>
       </div>
+
+      {/* Exibir os arquivos selecionados */}
+      {selectedFiles.length > 0 && (
+        <div className="selected-files">
+          {selectedFiles.map((file, index) => (
+            <div key={index} className="file-chip">
+              <span className="file-name">{file.name}</span>
+              <button className="remove-btn" onClick={() => removeFile(index)} aria-label={`Remover ${file.name}`}>x</button>
+            </div>
+          ))}
+        </div>
+      )}
+
       <div className="buttons">
         <button className="convert-image-btn" onClick={convertFiles} disabled={isLoading}>
           {isLoading ? 'Convertendo...' : 'Converter'}
@@ -93,7 +115,7 @@ const ImageSection = () => {
       )}
 
       {downloadUrl && (
-        <div style={{marginTop: 20}}>
+        <div className="download-section">
           <a href={downloadUrl} target="_blank" rel="noopener noreferrer">
             Baixar PDF Convertido
           </a>
