@@ -1,37 +1,60 @@
 import React, { useState } from 'react';
 import './styles.css';
-import { FaUpload } from 'react-icons/fa'; // Para adicionar um ícone de upload
+import { FaUpload, FaPlus, FaSpinner } from 'react-icons/fa';
 
 const AudioSection = () => {
   const [downloadUrl, setDownloadUrl] = useState('');
   const [fileName, setFileName] = useState('');
-  const [selectedFiles, setSelectedFiles] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState([]); 
+  const [isLoading, setIsLoading] = useState(false); 
+  const [errorMessage, setErrorMessage] = useState(null); 
+
+  const MAX_FILES = 10;
 
   const handleFileChange = (event) => {
-    const files = event.target.files;
+    const files = Array.from(event.target.files);
     if (files.length > 0) {
-      const fileNames = Array.from(files).map((file) => file.name).join(', ');
-      setSelectedFiles(fileNames);
-    } else {
-      setSelectedFiles(null);
+      const newFiles = files.filter(file => 
+        !selectedFiles.some(existingFile => 
+          existingFile.name === file.name && 
+          existingFile.size === file.size &&
+          existingFile.lastModified === file.lastModified
+        )
+      );
+
+      const totalFiles = selectedFiles.length + newFiles.length;
+      if (totalFiles > MAX_FILES) {
+        alert(`Você pode selecionar no máximo ${MAX_FILES} arquivos.`);
+        newFiles.splice(MAX_FILES - selectedFiles.length);
+      }
+
+      setSelectedFiles(prevFiles => [...prevFiles, ...newFiles]);
     }
   };
 
+  const removeFile = (index) => {
+    const newFiles = [...selectedFiles];
+    newFiles.splice(index, 1);
+    setSelectedFiles(newFiles);
+  };
+
   const convertFiles = async () => {
-    const files = document.getElementById('audioInput').files;
     const conversionType = document.getElementById('audioConversionSelect').value;
 
-    if (files.length === 0 || !conversionType) {
+    if (selectedFiles.length === 0 || !conversionType) {
       alert('Por favor, selecione pelo menos um arquivo e um tipo de conversão.');
       return;
     }
 
     const formData = new FormData();
     formData.append('conversionType', conversionType);
-    Array.from(files).forEach((file) => formData.append('files', file));
+    selectedFiles.forEach(file => formData.append('files', file));
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/convert/audio`, {
+      setIsLoading(true); 
+      setErrorMessage(null); 
+
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/convert/audio`, { 
         method: 'POST',
         body: formData,
       });
@@ -44,11 +67,13 @@ const AudioSection = () => {
         alert('Conversão concluída! Clique no botão de download para baixar o arquivo.');
       } else {
         const result = await response.json();
-        alert(`Erro na conversão: ${result.message}`);
+        setErrorMessage(`Erro na conversão: ${result.message}`);
       }
     } catch (error) {
       console.error('Erro ao converter arquivos:', error);
-      alert('Ocorreu um erro ao converter os arquivos.');
+      setErrorMessage('Ocorreu um erro ao converter os arquivos.');
+    } finally {
+      setIsLoading(false); 
     }
   };
 
@@ -60,9 +85,10 @@ const AudioSection = () => {
   const clearResults = () => {
     document.getElementById('audioInput').value = '';
     document.getElementById('audioConversionSelect').value = '';
+    setSelectedFiles([]);
     setDownloadUrl('');
     setFileName('');
-    setSelectedFiles(null);
+    setErrorMessage(null);
   };
 
   return (
@@ -70,6 +96,7 @@ const AudioSection = () => {
       <div className="title-header-audio">
         <h2>Áudio</h2>
       </div>
+      <hr style={{backgroundColor: 'red', borderColor: '#5C5470', borderWidth: 1}} />
       <div className="section-audio-selection">
         <label className="custom-file-upload">
           <input
@@ -79,9 +106,18 @@ const AudioSection = () => {
             accept="audio/*"
             onChange={handleFileChange}
           />
-          <FaUpload size={24} />
-          <span>{selectedFiles || 'Selecione os Arquivos'}</span>
+
+          <div className="upload-container">
+            <div className="icon-container">
+              {selectedFiles.length > 0 ? <FaPlus size={24} /> : <FaUpload size={24} />}
+            </div>
+            <span className="upload-text">
+              {selectedFiles.length > 0 ? 'Adicionar mais arquivos' : 'Escolher Arquivos'}
+            </span>
+          </div>
         </label>
+
+       
         <select id="audioConversionSelect" className="custom-select" defaultValue="">
           <option value="" disabled>
             Selecione uma conversão
@@ -91,14 +127,49 @@ const AudioSection = () => {
           <option value="mp4ToWebm">Converter MP4 para WEBM</option>
         </select>
       </div>
+
+   
+      {selectedFiles.length > 0 && (
+        <div className="selected-files">
+          {selectedFiles.map((file, index) => (
+            <div key={index} className="file-chip">
+              <span className="file-name">{file.name}</span>
+              <button 
+                className="remove-btn" 
+                onClick={() => removeFile(index)} 
+                aria-label={`Remover ${file.name}`}
+              >
+                x
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
       <div className="buttons">
-        <button className="convert-audio-btn" onClick={convertFiles}>
-          Converter
+        <button 
+          className="convert-audio-btn" 
+          onClick={convertFiles} 
+          disabled={isLoading}
+          aria-label="Converter arquivos selecionados"
+        >
+          {isLoading ? <FaSpinner className="spinner" /> : 'Converter'}
         </button>
-        <button className="clean-audio-btn" onClick={clearResults}>
+        <button 
+          className="clean-audio-btn" 
+          onClick={clearResults} 
+          disabled={isLoading}
+          aria-label="Limpar todos os arquivos selecionados"
+        >
           Limpar
         </button>
       </div>
+
+      {errorMessage && (
+        <div className="error-message">
+          {errorMessage}
+        </div>
+      )}
 
       {downloadUrl && (
         <div className="download-section">

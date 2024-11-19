@@ -54,13 +54,11 @@ input[type="file"] {
 }
 
 .icon-container {
-  border: 2px solid #fff;
   padding: 8px;
   border-radius: 4px; 
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #352F44; 
 }
 
 .upload-text {
